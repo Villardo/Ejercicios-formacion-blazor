@@ -27,7 +27,7 @@
                         {
                             <li style=" list-style-type: none;">
                                 <input type="checkbox" @bind="tarea.Check" />
-                                <input @bind="tarea.Nombre" readonly />
+                                <input @bind="tarea.Nombre" readonly style="border:none" />
                             </li>
                         }
                     }
@@ -42,7 +42,7 @@
                         {
                             <li style=" list-style-type: none;">
                                 <input type="checkbox" @bind="tarea.Check" />
-                                <input @bind="tarea.Nombre" readonly />
+                                <input @bind="tarea.Nombre" readonly style="text-decoration: line-through;border:none" />
                             </li>
                         }
                     }
