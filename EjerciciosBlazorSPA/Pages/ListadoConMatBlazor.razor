@@ -1,0 +1,12 @@
+﻿@page "/listado2"
+@using MatBlazor
+
+<h3>Probando MatBlazor</h3>
+<MatBlazor.BaseMatIcon>@MatIconNames.Add</MatBlazor.BaseMatIcon>
+<p>
+    <MatTextField @bind-Value="@myStringValue2" Label="Nueva tarea"></MatTextField>
+</p>
+
+@code {
+    string myStringValue2;
+}
