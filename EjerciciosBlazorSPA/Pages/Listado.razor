@@ -1,0 +1,68 @@
+﻿@page "/listado"
+@using EjerciciosBlazorSPA.Data
+
+<h3>Primer programa en Blazor</h3>
+<ul>
+    <li>Generacion de un gestor de tareas pendientes en Blazor SPA</li>
+    <li>Uso de dotnet watch</li>
+</ul>
+
+<hr />
+
+<div class="container">
+    <div class="row mb-5">
+        <label for="nueva_tarea" class="col-3 mt-2">Nueva tarea:</label>
+        <input type="text" class="col-6 mr-3 ml-3" id="nueva_tarea" placeholder="Nueva tarea" @bind="nuevaTarea">
+        <button type="button" class="btn btn-primary col" @onclick="AddTarea">Añadir tarea</button>
+    </div>
+
+    <div class="tareas">
+        <div class="row">
+            <div class="col-6">
+                <h4> Tareas pendientes</h4>
+                <ul>
+                    @foreach (var tarea in tareas)
+                    {
+                        @if (!tarea.Check)
+                        {
+                            <li style=" list-style-type: none;">
+                                <input type="checkbox" @bind="tarea.Check" />
+                                <input @bind="tarea.Nombre" readonly />
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="col-6">
+                <h4> Tareas completadas</h4>
+                <ul>
+                    @foreach (var tarea in tareas)
+                    {
+                        @if (tarea.Check)
+                        {
+                            <li style=" list-style-type: none;">
+                                <input type="checkbox" @bind="tarea.Check" />
+                                <input @bind="tarea.Nombre" readonly />
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private List<Tarea> tareas = new List<Tarea>();
+    private string nuevaTarea;
+
+    private void AddTarea()
+    {
+        if (!string.IsNullOrWhiteSpace(nuevaTarea))
+        {
+            tareas.Add(new Tarea { Nombre = nuevaTarea });
+            nuevaTarea = string.Empty;
+        }
+    }
+}
