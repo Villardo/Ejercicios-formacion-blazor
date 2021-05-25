@@ -31,5 +31,21 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+
+    <script>
+        let batteryPromise = navigator.getBattery();
+        batteryPromise.then(batteryCallback);
+
+        function batteryCallback(batteryObject) {
+            printBatteryStatus(batteryObject);
+        }
+        function printBatteryStatus(batteryObject) {
+            console.log("IsCharging", batteryObject.charging);
+            console.log("Percentage", batteryObject.level);            
+        }
+        function getBatteryLevel(batteryObject) {
+            return batteryObject.level;
+        }
+    </script>
 </body>
 </html>
