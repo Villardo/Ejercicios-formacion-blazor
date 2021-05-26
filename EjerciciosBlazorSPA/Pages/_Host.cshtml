@@ -32,7 +32,10 @@
 
     <script src="_framework/blazor.server.js"></script>
 
-    <script>
+    @*
+        Script para devolver la bateria actual del dispositivo
+
+        <script>
         let batteryPromise = navigator.getBattery();
         batteryPromise.then(batteryCallback);
 
@@ -46,6 +49,6 @@
         function getBatteryLevel(batteryObject) {
             return batteryObject.level;
         }
-    </script>
+    </script>*@
 </body>
 </html>

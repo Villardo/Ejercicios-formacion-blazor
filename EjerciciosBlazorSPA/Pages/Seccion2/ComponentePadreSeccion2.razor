@@ -1,0 +1,42 @@
+﻿@typeparam Titem
+@*<h3>ComponentePadreSeccion2</h3>
+
+
+    @for (int i = 0; i < 3; i++)
+    {
+        @VisualizarComponente
+    }*@
+
+<h3>Listado generico</h3>
+@if (Listado == null)
+{
+    //<p>El listado no ha sido asignado</p>
+    @NoInstanciado
+}
+else
+{
+    @if (Listado.Count == 0)
+    {
+        //<p>El listado no contiene elementos</p>
+        @SinRegistros
+    }
+    else
+    {
+        @foreach (var item in Listado)
+        {
+            @VisualizarComponente(item);
+        }
+
+    }
+}
+
+
+
+@code {
+    [Parameter] public List<Titem> Listado { get; set; }
+    [Parameter] public RenderFragment<Titem> VisualizarComponente { get; set; }
+    [Parameter] public RenderFragment SinRegistros { get; set; }
+    [Parameter] public RenderFragment NoInstanciado { get; set; }
+
+
+}

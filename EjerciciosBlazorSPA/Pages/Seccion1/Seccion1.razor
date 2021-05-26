@@ -1,0 +1,45 @@
+﻿@page "/seccion1"
+
+<h3>Seccion 1 - Funciones implicitas y explicitas</h3>
+
+<p>@Texto</p>
+<p>@(Texto)</p>
+<p>@(2+2)</p>
+<p>@(1!=2)</p>
+<p>@MiCoche.ToString()</p>
+<p>@MiCoche</p>
+
+<button @onclick="@nombreMetodo1">Botón 1</button>
+<button @onclick="nombreMetodo2">Botón 2</button>
+<button @onclick="@(()=>Texto="Pulsado botón 3")">Botón 3</button>
+
+
+
+@code {
+    string Texto = "Texto de prueba";
+    Coche MiCoche = new();
+
+
+
+    private void nombreMetodo1()
+    {
+        Texto = "Pulsado botón 1";
+    }
+
+    private void nombreMetodo2()
+    {
+        Texto = "Pulsado botón 2";
+    }
+
+
+
+    class Coche : Object
+    {
+        int Potencia = 400;
+        string Marca = "BMW";
+        public override string ToString()
+        {
+            return $"La potencia es de {Potencia}CV y de la Marca{Marca}";
+        }
+    }
+}

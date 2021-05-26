@@ -1,0 +1,46 @@
+﻿@page "/seccion2"
+
+<h3>Seccion 2 - Uso de MarkupString</h3>
+
+<p>@CodigoHTML</p>
+<p>@((MarkupString)CodigoHTML)</p>
+@((MarkupString)CodigoHTML)
+
+<h3>Seccion - Render Fragments</h3>
+
+<ComponentePadreSeccion2 Listado="miLista">
+    @*
+        <VisualizarComponente Context="Texto">
+            <ComponenteSeccion2></ComponenteSeccion2>
+        </VisualizarComponente>
+    *@
+
+    @*
+         <VisualizarComponente Context="Texto">
+            <OtroComponenteSeccion2 TextoAMostrar="@Texto"></OtroComponenteSeccion2>
+        </VisualizarComponente>
+    *@
+    <NoInstanciado>
+        <Seccion2NoInstanciado></Seccion2NoInstanciado>
+    </NoInstanciado>
+    <SinRegistros>
+        <p>No tengo registros</p>
+    </SinRegistros>
+    <VisualizarComponente>
+        <OtroComponenteSeccion2 TextoAMostrar="@context"></OtroComponenteSeccion2>
+    </VisualizarComponente>
+</ComponentePadreSeccion2>
+
+
+@code {
+    //List<int> miLista; //null
+    List<string> miLista = new();
+    string CodigoHTML = "<H1>Título de prueba</H1>";
+
+    protected override void OnInitialized()
+    {
+        miLista.Add("Cadena 1");
+        miLista.Add("Cadena 2");
+        miLista.Add("Cadena 3");
+    }
+}
