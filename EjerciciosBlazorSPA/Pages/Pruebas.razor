@@ -2,11 +2,29 @@
 @*@inject IJSRuntime JS*@
 
 <h3>Pruebas</h3>
+<input type="text" @onkeydown="KeyboardEventHandler " @onkeypress=" KeyboardEventHandler " @onkeyup="KeyboardEventHandler " />
+
 
 @*<button @onclick="GetBateria"></button>*@
 
 
 @code {
+    private void KeyboardEventHandler(KeyboardEventArgs args)
+    {
+        switch (args.Type)
+        {
+            case "ArrowLeft":
+                break;
+            case "ArrowUp":
+                break;
+            case "ArrowRight":
+                break;
+            case "ArrowDown":
+                break;
+            default:
+                break;
+        }
+    }
     //string myStringValue2;
 
     //private async Task GetBateria()
