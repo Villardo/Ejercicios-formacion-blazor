@@ -46,7 +46,7 @@
                             </li>
                         }
                     }
-                </ul>
+                </ul>td
             </div>
         </div>
     </div>
@@ -54,8 +54,11 @@
 
 
 @code {
+    //todo: cambiar los inputs por labels y adjuntarle un id a cada item de la lista
+
     private List<Tarea> tareas = new List<Tarea>();
     private string nuevaTarea;
+    private int contador=0;
 
     private void AddTarea()
     {
