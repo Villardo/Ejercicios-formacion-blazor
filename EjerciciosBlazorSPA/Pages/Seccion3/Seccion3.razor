@@ -1,0 +1,38 @@
+﻿@page "/seccion3"
+@using System.Timers
+@implements IDisposable
+
+<h3>Seccion3 - Timers</h3>
+<p>Valor contador: @contador</p>
+<button @onclick="Arrancar">Arranca</button>
+<button @onclick="Parar">Arranca</button>
+
+@code {
+    private Timer miTimer = new Timer();
+    private int contador;
+
+    protected override void OnInitialized()
+    {
+        miTimer.Interval = 1000;
+        miTimer.Elapsed += MetodoTimer;
+        contador = 0;
+    }
+    private void MetodoTimer(object senter, ElapsedEventArgs e)
+    {
+        Console.WriteLine();
+        contador++;
+        InvokeAsync(StateHasChanged);
+    }
+    private void Arrancar()
+    {
+        miTimer.Start();
+    }
+    private void Parar()
+    {
+        miTimer.Stop();
+    }
+    public void Dispose()
+    {
+        miTimer.Dispose();
+    }
+}
