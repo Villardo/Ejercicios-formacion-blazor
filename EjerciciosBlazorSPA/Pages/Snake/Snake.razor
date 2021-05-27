@@ -1,62 +1,159 @@
-﻿
-@using Pages.Snake
+﻿@page "/snake"
+@using System.Timers
+@implements IDisposable
 
-@using EjerciciosBlazorSPA.Data
+<style>
+    .snake {
+        background-color: lawngreen;
+        height: 0.5rem;
+        width: 0.5rem;
+    }
+
+    .escenario {
+        background-color: red;
+        height: 0.5rem;
+        width: 0.5rem;
+    }
+    .tablero {
+        background-color:aquamarine;
+        height: 0.5rem;
+        width: 0.5rem;
+    }
+
+    .manzana {
+        background-color: forestgreen;
+        height: 0.5rem;
+        width: 0.5rem;
+    }
+
+</style>
 
 <h3>Snake</h3>
 
-@*<Tablero Items="CoordenadasTablero" Context="Coordenada">
-    <RowTemplate>
-        <td>@Coordenada.posX</td>
-        <td>@Coordenada.posY</td>
-    </RowTemplate>
-</Tablero>*@
-<p></p>
-<input type="text" @onkeydown="KeyboardEventHandler " @onkeypress=" KeyboardEventHandler " @onkeyup="KeyboardEventHandler " />
+<table style="border: 5px solid pink;">
+    @for (var j = 0; j < MaxY; j++)
+    {
+        <tr>
+            @for (var i = 0; i < MaxX; i++)
+            {
+                if (AppleX == i && AppleY == j)
+                {
+                    <td>[M]</td>
+                }
+                else if (SnakeX == i && SnakeY == j)
+                {
+                    <td>[S]</td>
+                }
+                else if (SnakeX == AppleX && SnakeY == AppleY)
+                {
+                    AppleX = RandNum.Next(0, MaxX);
+                    AppleY = RandNum.Next(0, MaxY);
+                }
+                else
+                {
+                    <td>[ ]</td>
+                }
+            }
+        </tr>
+    }
+</table>
+<input type="text" @onkeydown="KeyboardEventHandler" />
+<p>Valor contador: @Counter</p>
+<button @onclick="TimerStart">Jugar</button>
 
 @code {
-    //private Board tablero = new Board();
-    //private SnakePlayer Serpiente = new();
+    public int MaxX { get; set; }
+    public int MaxY { get; set; }
+    public int AppleX { get; set; }
+    public int AppleY { get; set; }
+    public int SnakeX { get; set; }
+    public int SnakeY { get; set; }
 
-    //private List<Coordinate> CoordenadasTablero = new()
-    //{
-    //    new Coordinate { posX = 1, posY = 1 },
-    //    new Coordinate { posX = 1, posY = 2 },
-    //    new Coordinate { posX = 1, posY = 3 },
-
-    //    new Coordinate { posX = 2, posY = 1 },
-    //    new Coordinate { posX = 2, posY = 2 },
-    //    new Coordinate { posX = 2, posY = 3 },
-
-    //    new Coordinate { posX = 3, posY = 1 },
-    //    new Coordinate { posX = 3, posY = 2 },
-    //    new Coordinate { posX = 3, posY = 3 }
-    //};
-
-
-    private void eat()
-    {
-
-    }
-    private void paint()
-    {
-
-    }
+    public Random RandNum = new Random();
+    private Timer MyTimer = new();
+    private int Counter;
+    private int Direction;
 
     private void KeyboardEventHandler(KeyboardEventArgs args)
     {
-        switch (args.Type)
+        switch (args.Key)
         {
+            //error potencial
             case "ArrowLeft":
+                Direction = 0;
+                Console.WriteLine("LEFT");
                 break;
             case "ArrowUp":
+                Direction = 1;
+                Console.WriteLine("UP");
                 break;
             case "ArrowRight":
+                Direction = 2;
+                Console.WriteLine("RIGHT");
                 break;
             case "ArrowDown":
+                Direction = 3;
+                Console.WriteLine("DOWN");
                 break;
             default:
                 break;
         }
+    }
+
+    protected override void OnInitialized()
+    {
+        MaxX = 10;
+        MaxY = 10;
+        AppleX = RandNum.Next(0, MaxX);
+        AppleY = RandNum.Next(0, MaxY);
+        MyTimer.Interval = 1000;
+        MyTimer.Elapsed += TimerEvent;
+        Counter = 0;
+    }
+
+    private void CreateApple()
+    {
+        AppleX = RandNum.Next(0, MaxX);
+        AppleY = RandNum.Next(0, MaxY);
+    }
+
+    private void TimerStart()
+    {
+        MyTimer.Start();
+    }
+
+    private void TimerStop()
+    {
+        MyTimer.Stop();
+    }
+
+    private void TimerEvent(object senter, ElapsedEventArgs e)
+    {
+        Counter++;
+        switch (Direction)
+        {
+            case 0: // Left
+                SnakeX--;
+                break;
+            case 1: // Up
+                SnakeY--;
+                break;
+            case 2: // Right
+                SnakeX++;
+                break;
+            case 3: // Down
+                SnakeY++;
+                break;
+            default:
+                SnakeX++;
+                break;
+        }
+        Console.WriteLine($"Valor del contador {Counter}");
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        MyTimer.Dispose();
     }
 }

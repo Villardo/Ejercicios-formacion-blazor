@@ -27,14 +27,16 @@
                         {
                             <li style=" list-style-type: none;">
                                 <input type="checkbox" @bind="tarea.Check" />
-                                <input @bind="tarea.Nombre" readonly style="border:none" />
+                                <label id="@tarea.Id">
+                                    @tarea.Nombre
+                                </label>
                             </li>
                         }
                     }
                 </ul>
             </div>
             <div class="col-6">
-                <h4> Tareas completadas</h4>
+                <h4> Tareas completadass</h4>
                 <ul>
                     @foreach (var tarea in tareas)
                     {
@@ -42,7 +44,9 @@
                         {
                             <li style=" list-style-type: none;">
                                 <input type="checkbox" @bind="tarea.Check" />
-                                <input @bind="tarea.Nombre" readonly style="text-decoration: line-through;border:none" />
+                                <label id="@tarea.Id" style="text-decoration: line-through;">
+                                    @tarea.Nombre
+                                </label>
                             </li>
                         }
                     }
@@ -58,13 +62,18 @@
 
     private List<Tarea> tareas = new List<Tarea>();
     private string nuevaTarea;
-    //private int contador=0;
+    private int contador = 0;
 
     private void AddTarea()
     {
         if (!string.IsNullOrWhiteSpace(nuevaTarea))
         {
-            tareas.Add(new Tarea { Nombre = nuevaTarea });
+            contador++;
+            tareas.Add(new Tarea
+            {
+                Nombre = nuevaTarea,
+                Id = contador
+            });
             nuevaTarea = string.Empty;
         }
     }
