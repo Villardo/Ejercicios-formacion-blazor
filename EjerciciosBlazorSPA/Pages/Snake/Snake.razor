@@ -4,33 +4,28 @@
 
 <style>
     .snake {
-        background-color: lawngreen;
-        height: 0.5rem;
-        width: 0.5rem;
-    }
-
-    .escenario {
-        background-color: red;
-        height: 0.5rem;
-        width: 0.5rem;
-    }
-    .tablero {
-        background-color:aquamarine;
-        height: 0.5rem;
-        width: 0.5rem;
-    }
-
-    .manzana {
         background-color: forestgreen;
-        height: 0.5rem;
-        width: 0.5rem;
+        height: 1rem;
+        width: 1rem;
+    }
+
+    .board {
+        background-color:lightgrey;
+        height: 1rem;
+        width: 1rem;
+    }
+
+    .apple {
+        background-color: orangered;
+        height: 1rem;
+        width: 1rem;
     }
 
 </style>
 
 <h3>Snake</h3>
 
-<table style="border: 5px solid pink;">
+<table runat="server" style="border: 5px solid black; width:auto;">
     @for (var j = 0; j < MaxY; j++)
     {
         <tr>
@@ -38,11 +33,11 @@
             {
                 if (AppleX == i && AppleY == j)
                 {
-                    <td>[M]</td>
+                    <td class="apple"></td>
                 }
                 else if (SnakeX == i && SnakeY == j)
                 {
-                    <td>[S]</td>
+                    <td class="snake"></td>
                 }
                 else if (SnakeX == AppleX && SnakeY == AppleY)
                 {
@@ -51,13 +46,13 @@
                 }
                 else
                 {
-                    <td>[ ]</td>
+                    <td class="board"></td>
                 }
             }
         </tr>
     }
 </table>
-<input type="text" @onkeydown="KeyboardEventHandler" />
+<input class="mt-3" type="text" @onkeydown="KeyboardEventHandler" />
 <p>Valor contador: @Counter</p>
 <button @onclick="TimerStart">Jugar</button>
 
@@ -102,8 +97,8 @@
 
     protected override void OnInitialized()
     {
-        MaxX = 10;
-        MaxY = 10;
+        MaxX = 20;
+        MaxY = 20;
         AppleX = RandNum.Next(0, MaxX);
         AppleY = RandNum.Next(0, MaxY);
         MyTimer.Interval = 1000;
