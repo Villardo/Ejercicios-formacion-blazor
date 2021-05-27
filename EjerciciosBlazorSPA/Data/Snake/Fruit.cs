@@ -20,6 +20,7 @@ namespace EjerciciosBlazorSPA.Data.Snake
 
             estaEnTablero = true;
         }
+
     }
 
 }
