@@ -10,7 +10,7 @@
     }
 
     .board {
-        background-color:lightgrey;
+        background-color: lightgrey;
         height: 1rem;
         width: 1rem;
     }
@@ -20,7 +20,6 @@
         height: 1rem;
         width: 1rem;
     }
-
 </style>
 
 <h3>Snake</h3>
@@ -28,33 +27,44 @@
 <table runat="server" style="border: 5px solid black; width:auto;">
     @for (var j = 0; j < MaxY; j++)
     {
-        <tr>
-            @for (var i = 0; i < MaxX; i++)
+    <tr>
+        @for (var i = 0; i < MaxX; i++)
+        {
+            if (AppleX == i && AppleY == j)
             {
-                if (AppleX == i && AppleY == j)
-                {
-                    <td class="apple"></td>
-                }
-                else if (SnakeX == i && SnakeY == j)
-                {
-                    <td class="snake"></td>
-                }
-                else if (SnakeX == AppleX && SnakeY == AppleY)
-                {
-                    AppleX = RandNum.Next(0, MaxX);
-                    AppleY = RandNum.Next(0, MaxY);
-                }
-                else
-                {
-                    <td class="board"></td>
-                }
+                <td class="apple"></td>
             }
-        </tr>
+            else if (SnakeX == i && SnakeY == j)
+            {
+                <td class="snake"></td>
+            }
+            else if (SnakeX == AppleX && SnakeY == AppleY)
+            {
+                Score += 50;
+                AppleX = RandNum.Next(0, MaxX);
+                AppleY = RandNum.Next(0, MaxY);
+            }
+            else if (SnakeX < 0 || SnakeX > MaxX || SnakeY < 0 || SnakeY > MaxY)
+            {
+                TimerStop();
+                GameOver = true;
+            }
+            else
+            {
+                <td class="board"></td>
+            }
+        }
+    </tr>
     }
 </table>
-<input class="mt-3" type="text" @onkeydown="KeyboardEventHandler" />
-<p>Valor contador: @Counter</p>
-<button @onclick="TimerStart">Jugar</button>
+<p class="mt-3 ml-3">Valor contador: @Counter</p>
+<p class="mt-3 ml-3">Puntos: @Score</p>
+@if (GameOver)
+{
+    <h2>Has perdido</h2>
+}
+<input class="mb-2" style="width:27%" type="text" @onkeydown="KeyboardEventHandler" />
+<button class="btn-block" style="width:27%" @onclick="TimerStart">Jugar</button>
 
 @code {
     public int MaxX { get; set; }
@@ -66,8 +76,8 @@
 
     public Random RandNum = new Random();
     private Timer MyTimer = new();
-    private int Counter;
-    private int Direction;
+    private int Counter, Direction, Score;
+    private bool GameOver=false;
 
     private void KeyboardEventHandler(KeyboardEventArgs args)
     {
@@ -101,7 +111,7 @@
         MaxY = 20;
         AppleX = RandNum.Next(0, MaxX);
         AppleY = RandNum.Next(0, MaxY);
-        MyTimer.Interval = 1000;
+        MyTimer.Interval = 300;
         MyTimer.Elapsed += TimerEvent;
         Counter = 0;
     }
