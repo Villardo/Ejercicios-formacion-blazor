@@ -1,0 +1,121 @@
+﻿@page "/snake"
+
+@using System.Timers
+@implements IDisposable
+
+<h3>Manzana</h3>
+
+<table>
+    @for (var j = 0; j < MaxY; j++)
+    {
+        <tr>
+            @for (var i = 0; i < MaxX; i++)
+            {
+                if (AppleX == i && AppleY == j)
+                {
+                    <td style="background-color:greenyellow;height: 0.5rem;width: 0.5rem;">S</td>
+                }
+                else
+                {
+                    <td style="background-color:lightblue;height: 0.5rem;width: 0.5rem;"></td>
+                }
+            }
+        </tr>
+    }
+</table>
+<input type="text" @onkeydown="KeyboardEventHandler" />
+<p>Valor contador: @contador</p>
+<button @onclick="Arrancar">Arranca temporizador</button>
+<button @onclick="Parar">Para temporizador</button>
+
+@code {
+    public int MaxX { get; set; }
+    public int MaxY { get; set; }
+    public int AppleX { get; set; }
+    public int AppleY { get; set; }
+    public int direccion { get; set; }
+
+    private Timer miTimer = new();
+    private int contador;
+
+
+    private void KeyboardEventHandler(KeyboardEventArgs args)
+    {
+        switch (args.Key)
+        {
+            //error potencial
+            case "ArrowLeft":
+                AppleX--;
+                direccion = 0;
+                Console.WriteLine("LEFT");
+                break;
+            case "ArrowUp":
+                AppleY--;
+                direccion = 1;
+                Console.WriteLine("UP");
+                break;
+            case "ArrowRight":
+                AppleX++;
+                direccion = 2;
+                Console.WriteLine("RIGHT");
+                break;
+            case "ArrowDown":
+                AppleY++;
+                direccion = 3;
+                Console.WriteLine("DOWN");
+                break;
+            default:
+                break;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        MaxX = 15;
+        MaxY = 15;
+
+        miTimer.Interval = 1000;
+        miTimer.Elapsed += MetodoTimer;
+        contador = 0;
+    }
+
+    private void Arrancar()
+    {
+        miTimer.Start();
+    }
+
+    private void Parar()
+    {
+        miTimer.Stop();
+    }
+
+    private void MetodoTimer(object senter, ElapsedEventArgs e)
+    {
+        contador++;
+        switch (direccion)
+        {
+            case 0: // Left
+                AppleX--;
+                break;
+            case 1: // Up
+                AppleY--;
+                break;
+            case 2: // Right
+                AppleX++;
+                break;
+            case 3: // Down
+                AppleY++;
+                break;
+            default:
+                break;
+        }
+
+        Console.WriteLine($"Valor del contador {contador}");
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        miTimer.Dispose();
+    }
+}

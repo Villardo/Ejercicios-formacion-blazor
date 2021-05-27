@@ -1,0 +1,97 @@
+﻿@page "/juego"
+@using System.Timers
+@implements IDisposable
+
+<h3>Juego</h3>
+
+<p>Valor contador: @contador</p>
+<button @onclick="Arrancar">Arranca</button>
+<button @onclick="Parar">Para</button>
+
+<table id="tablas" runat="server" style="border: 5px solid pink;">
+    @for (var x = 0; x < 64; x++)
+    {
+        <tr>
+            @for (var i = 0; i < 64; i++)
+            {
+                if ((x == @xe) && (i == @ie))
+                {
+                    <td style=" background-color: green;height: 0.5rem;width: 0.5rem;"></td>
+                }
+                else
+                {
+                    <td style=" background-color: red;height: 0.5rem;width: 0.5rem;"></td>
+                }
+            }
+        </tr>
+    }
+</table>
+
+
+
+@code {
+    int xe = 3;
+    int ie = 30;
+
+    private Timer miTimer = new Timer();
+    private int contador;
+    private Fruit fruta = new Fruit();
+
+    protected override void OnInitialized()
+    {
+        miTimer.Interval = 1000;
+        miTimer.Elapsed += MetodoTimer;
+        contador = 0;
+        //Arrancar();
+
+    }
+    private void MetodoTimer(object senter, ElapsedEventArgs e)
+    {
+        contador++;
+        InvokeAsync(StateHasChanged);
+        fruta.generar();
+        //Console.WriteLine($"Existe fruta ={ fruta.existeFruta()}") ;
+    }
+    private void Arrancar()
+    {
+        miTimer.Start();
+    }
+    private void Parar()
+    {
+        miTimer.Stop();
+    }
+    public void Dispose()
+    {
+        miTimer.Dispose();
+    }
+
+
+    public class Fruit
+    {
+        private Coordinate CoordenadasFruta = new();
+        private bool estaEnTablero = false;
+        public void generar()
+        {
+            Random rnd = new Random();
+            int x = rnd.Next(1, 65);
+            int y = rnd.Next(1, 65);
+
+            CoordenadasFruta.posX = x;
+            CoordenadasFruta.posY = y;
+
+            estaEnTablero = true;
+            Console.WriteLine($"La fruta se ha generado en x{CoordenadasFruta.posX},y{CoordenadasFruta.posY}");
+
+        }
+        public bool existeFruta()
+        {
+            return estaEnTablero;
+        }
+    }
+
+    public class Coordinate
+    {
+        public int posX { get; set; }
+        public int posY { get; set; }
+    }
+}

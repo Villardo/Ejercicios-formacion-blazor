@@ -1,37 +1,37 @@
-﻿@page "/snake"
+﻿
 @using Pages.Snake
-@using Data.Snake
+
 @using EjerciciosBlazorSPA.Data
 
 <h3>Snake</h3>
 
-<Tablero Items="CoordenadasTablero" Context="Coordenada">
+@*<Tablero Items="CoordenadasTablero" Context="Coordenada">
     <RowTemplate>
         <td>@Coordenada.posX</td>
         <td>@Coordenada.posY</td>
     </RowTemplate>
-</Tablero>
+</Tablero>*@
 <p></p>
 <input type="text" @onkeydown="KeyboardEventHandler " @onkeypress=" KeyboardEventHandler " @onkeyup="KeyboardEventHandler " />
 
 @code {
-    private Board tablero = new Board();
-    private SnakePlayer Serpiente = new();
+    //private Board tablero = new Board();
+    //private SnakePlayer Serpiente = new();
 
-    private List<Coordinate> CoordenadasTablero = new()
-    {
-        new Coordinate { posX = 1, posY = 1 },
-        new Coordinate { posX = 1, posY = 2 },
-        new Coordinate { posX = 1, posY = 3 },
+    //private List<Coordinate> CoordenadasTablero = new()
+    //{
+    //    new Coordinate { posX = 1, posY = 1 },
+    //    new Coordinate { posX = 1, posY = 2 },
+    //    new Coordinate { posX = 1, posY = 3 },
 
-        new Coordinate { posX = 2, posY = 1 },
-        new Coordinate { posX = 2, posY = 2 },
-        new Coordinate { posX = 2, posY = 3 },
+    //    new Coordinate { posX = 2, posY = 1 },
+    //    new Coordinate { posX = 2, posY = 2 },
+    //    new Coordinate { posX = 2, posY = 3 },
 
-        new Coordinate { posX = 3, posY = 1 },
-        new Coordinate { posX = 3, posY = 2 },
-        new Coordinate { posX = 3, posY = 3 }
-    };
+    //    new Coordinate { posX = 3, posY = 1 },
+    //    new Coordinate { posX = 3, posY = 2 },
+    //    new Coordinate { posX = 3, posY = 3 }
+    //};
 
 
     private void eat()
@@ -58,10 +58,5 @@
             default:
                 break;
         }
-    }
-
-    private void intersect(SnakeHead cabeza)
-    {
-
     }
 }
