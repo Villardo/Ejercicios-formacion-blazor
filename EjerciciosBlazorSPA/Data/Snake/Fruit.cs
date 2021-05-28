@@ -8,7 +8,7 @@ namespace EjerciciosBlazorSPA.Data.Snake
     public class Fruit
     {
         private Coordinate CoordenadasFruta = new();
-        private bool estaEnTablero= false;
+        private bool EstaEnTablero= false;
         public void generar()
         {
             Random rnd = new Random();
@@ -18,7 +18,14 @@ namespace EjerciciosBlazorSPA.Data.Snake
             CoordenadasFruta.posX = x;
             CoordenadasFruta.posY = y;
 
-            estaEnTablero = true;
+            EstaEnTablero = true;
+        }
+        public void ExisteFruta()
+        {
+            if (!EstaEnTablero)
+            {
+                generar();
+            }
         }
     }
 
