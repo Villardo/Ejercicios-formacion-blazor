@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EjerciciosBlazorSPA.Pages.Seccion8;
 
 namespace EjerciciosBlazorSPA
 {
@@ -29,6 +30,10 @@ namespace EjerciciosBlazorSPA
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<IVehiculo,Seccion8Moto>();
+            services.AddSingleton<Seccion8Coche>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

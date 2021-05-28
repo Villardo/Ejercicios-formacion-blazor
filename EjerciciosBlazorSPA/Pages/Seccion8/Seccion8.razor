@@ -1,0 +1,20 @@
+﻿@page "/seccion8"
+@inject IVehiculo Vehiculo
+@inject NavigationManager Navegador
+@inject Seccion8Coche CocheInyectado
+
+<h3>Seccion 8 - Inyección de dependencias</h3>
+
+<p>Numero de ruedas del vehiculo: @Vehiculo.DameRuedas()</p>
+<p>Numero de plazas del vehiculo: @Vehiculo.DamePlazas()</p>
+
+<p>Numero de ruedas del vehiculo: @CocheInyectado.DameRuedas())</p>
+<p>Numero de plazas del vehiculo: @CocheInyectado.DamePlazas()</p>
+
+<p>@Navegador.BaseUri</p>
+<p>@Navegador.Uri</p>
+<p>@Navegador.</p>
+
+@code {
+
+}
