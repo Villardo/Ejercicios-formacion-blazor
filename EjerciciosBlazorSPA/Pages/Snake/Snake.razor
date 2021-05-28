@@ -1,6 +1,7 @@
 ﻿@page "/snake"
 @using System.Timers
 @implements IDisposable
+@inject IJSRuntime JS
 
 <h3>Snake</h3>
 
@@ -46,7 +47,7 @@
     <h2>Has perdido</h2>
 }
 
-<input class="txtControl mb-2" type="text" @onkeydown="KeyboardEventHandler" />
+<input id="controls" class="txtControl mb-2" type="text" @onkeydown="KeyboardEventHandler" />
 <button class="btnPlay btn-block" @onclick="TimerStart">Jugar</button>
 
 @code {
@@ -54,13 +55,13 @@
     public int MaxY { get; set; }
     public int AppleX { get; set; }
     public int AppleY { get; set; }
-    public int SnakeX { get; set; }
-    public int SnakeY { get; set; }
+    public int SnakeX { get; set; } = 10;
+    public int SnakeY { get; set; } = 10;
     public Random RandNum = new Random();
     private Timer MyTimer = new();
     private int Counter, Direction, Score;
     private bool GameOver = false;
-    private const int 
+    private const int
         LEFT = 0,
         UP = 1,
         RIGHT = 2,
@@ -118,6 +119,12 @@
     private void TimerStart()
     {
         MyTimer.Start();
+        focusOnControls();
+    }
+
+    private async Task focusOnControls()
+    {
+        await JS.InvokeVoidAsync("setFocusOnInput");
     }
 
     private void TimerStop()
