@@ -3,26 +3,26 @@
 @implements IDisposable
 @inject IJSRuntime JS
 
-<h3>Snake</h3>
+<h2>Snake</h2>
 
-<h2>Dificultad</h2>
+<h4>Dificultad</h4>
 <div class="form-check-inline">
     <input @onchange="@(()=>updateDifficulty(1000))" class="form-check-input" type="radio" name="difficulty" id="easy" value="1000" checked>
     <label class="form-check-label" for="easy">
         Fácil
     </label>
     <br />
-    <input @onchange="@(()=>updateDifficulty(500))" class="form-check-input" type="radio" name="difficulty" id="normal" value="500">
+    <input @onchange="@(()=>updateDifficulty(300))" class="form-check-input" type="radio" name="difficulty" id="normal" value="300">
     <label class="form-check-label" for="normal">
         Normal
     </label>
     <br />
-    <input @onchange="@(()=>updateDifficulty(300))" class="form-check-input" type="radio" name="difficulty" id="hard" value="300">
+    <input @onchange="@(()=>updateDifficulty(100))" class="form-check-input" type="radio" name="difficulty" id="hard" value="100">
     <label class="form-check-label" for="hard">
         Dificil
     </label>
     <br />
-    <input @onchange="@(()=>updateDifficulty(100))" class="form-check-input" type="radio" name="difficulty" id="extreme" value="100">
+    <input @onchange="@(()=>updateDifficulty(50))" class="form-check-input" type="radio" name="difficulty" id="extreme" value="50">
     <label class="form-check-label" for="extreme">
         Extremo
     </label>
