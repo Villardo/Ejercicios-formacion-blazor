@@ -32,23 +32,30 @@
 
     <script src="_framework/blazor.server.js"></script>
 
+    <script>
+        function setFocusOnInput() {
+            const element = document.getElementById("controls");
+            element.focus();
+        }
+    </script>
+
     @*
-        Script para devolver la bateria actual del dispositivo
+            Script para devolver la bateria actual del dispositivo
 
-        <script>
-        let batteryPromise = navigator.getBattery();
-        batteryPromise.then(batteryCallback);
+            <script>
+            let batteryPromise = navigator.getBattery();
+            batteryPromise.then(batteryCallback);
 
-        function batteryCallback(batteryObject) {
-            printBatteryStatus(batteryObject);
-        }
-        function printBatteryStatus(batteryObject) {
-            console.log("IsCharging", batteryObject.charging);
-            console.log("Percentage", batteryObject.level);            
-        }
-        function getBatteryLevel(batteryObject) {
-            return batteryObject.level;
-        }
-    </script>*@
+            function batteryCallback(batteryObject) {
+                printBatteryStatus(batteryObject);
+            }
+            function printBatteryStatus(batteryObject) {
+                console.log("IsCharging", batteryObject.charging);
+                console.log("Percentage", batteryObject.level);
+            }
+            function getBatteryLevel(batteryObject) {
+                return batteryObject.level;
+            }
+        </script>*@
 </body>
 </html>
