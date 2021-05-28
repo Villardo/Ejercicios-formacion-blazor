@@ -2,69 +2,52 @@
 @using System.Timers
 @implements IDisposable
 
-<style>
-    .snake {
-        background-color: forestgreen;
-        height: 1rem;
-        width: 1rem;
-    }
-
-    .board {
-        background-color: lightgrey;
-        height: 1rem;
-        width: 1rem;
-    }
-
-    .apple {
-        background-color: orangered;
-        height: 1rem;
-        width: 1rem;
-    }
-</style>
-
 <h3>Snake</h3>
 
-<table runat="server" style="border: 5px solid black; width:auto;">
+<table class="game" runat="server">
     @for (var j = 0; j < MaxY; j++)
     {
-    <tr>
-        @for (var i = 0; i < MaxX; i++)
-        {
-            if (AppleX == i && AppleY == j)
+        <tr>
+            @for (var i = 0; i < MaxX; i++)
             {
-                <td class="apple"></td>
+                if (AppleX == i && AppleY == j)
+                {
+                    <td class="apple"></td>
+                }
+                else if (SnakeX == i && SnakeY == j)
+                {
+                    <td class="snake"></td>
+                }
+                else if (SnakeX == AppleX && SnakeY == AppleY)
+                {
+                    Score += 50;
+                    CreateApple();
+
+                }
+                else if (SnakeX < 0 || SnakeX > MaxX || SnakeY < 0 || SnakeY > MaxY)
+                {
+                    TimerStop();
+                    GameOver = true;
+                }
+                else
+                {
+                    <td class="board"></td>
+                }
             }
-            else if (SnakeX == i && SnakeY == j)
-            {
-                <td class="snake"></td>
-            }
-            else if (SnakeX == AppleX && SnakeY == AppleY)
-            {
-                Score += 50;
-                AppleX = RandNum.Next(0, MaxX);
-                AppleY = RandNum.Next(0, MaxY);
-            }
-            else if (SnakeX < 0 || SnakeX > MaxX || SnakeY < 0 || SnakeY > MaxY)
-            {
-                TimerStop();
-                GameOver = true;
-            }
-            else
-            {
-                <td class="board"></td>
-            }
-        }
-    </tr>
+        </tr>
     }
 </table>
+
 <p class="mt-3 ml-3">Valor contador: @Counter</p>
 <p class="mt-3 ml-3">Puntos: @Score</p>
+
 @if (GameOver)
 {
     <h2>Has perdido</h2>
 }
-<input class="mb-2" style="width:27%" type="text" @onkeydown="KeyboardEventHandler" />
-<button class="btn-block" style="width:27%" @onclick="TimerStart">Jugar</button>
+
+<input class="txtControl mb-2" type="text" @onkeydown="KeyboardEventHandler" />
+<button class="btnPlay btn-block" @onclick="TimerStart">Jugar</button>
 
 @code {
     public int MaxX { get; set; }
@@ -73,47 +56,57 @@
     public int AppleY { get; set; }
     public int SnakeX { get; set; }
     public int SnakeY { get; set; }
-
     public Random RandNum = new Random();
     private Timer MyTimer = new();
     private int Counter, Direction, Score;
-    private bool GameOver=false;
+    private bool GameOver = false;
+    private const int 
+        LEFT = 0,
+        UP = 1,
+        RIGHT = 2,
+        DOWN = 3;
+    private int lastDirection = RIGHT;
 
     private void KeyboardEventHandler(KeyboardEventArgs args)
     {
         switch (args.Key)
         {
-            //error potencial
             case "ArrowLeft":
-                Direction = 0;
-                Console.WriteLine("LEFT");
+                if (lastDirection != RIGHT)
+                {
+                    Direction = LEFT;
+
+                }
                 break;
             case "ArrowUp":
-                Direction = 1;
-                Console.WriteLine("UP");
+                if (lastDirection != DOWN)
+                {
+                    Direction = UP;
+                }
                 break;
             case "ArrowRight":
-                Direction = 2;
-                Console.WriteLine("RIGHT");
+                if (lastDirection != LEFT)
+                {
+                    Direction = RIGHT;
+                }
                 break;
             case "ArrowDown":
-                Direction = 3;
-                Console.WriteLine("DOWN");
-                break;
-            default:
+                if (lastDirection != UP)
+                {
+                    Direction = DOWN;
+                }
                 break;
         }
     }
 
     protected override void OnInitialized()
     {
-        MaxX = 20;
-        MaxY = 20;
-        AppleX = RandNum.Next(0, MaxX);
-        AppleY = RandNum.Next(0, MaxY);
         MyTimer.Interval = 300;
         MyTimer.Elapsed += TimerEvent;
+        MaxX = 20;
+        MaxY = 20;
         Counter = 0;
+        CreateApple();
     }
 
     private void CreateApple()
@@ -137,23 +130,20 @@
         Counter++;
         switch (Direction)
         {
-            case 0: // Left
+            case LEFT:
                 SnakeX--;
                 break;
-            case 1: // Up
+            case UP:
                 SnakeY--;
                 break;
-            case 2: // Right
+            case RIGHT:
                 SnakeX++;
                 break;
-            case 3: // Down
+            case DOWN:
                 SnakeY++;
                 break;
-            default:
-                SnakeX++;
-                break;
         }
-        Console.WriteLine($"Valor del contador {Counter}");
+        lastDirection = Direction;
         InvokeAsync(StateHasChanged);
     }
 
