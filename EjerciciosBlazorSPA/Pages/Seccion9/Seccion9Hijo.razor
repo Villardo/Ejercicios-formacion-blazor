@@ -1,0 +1,13 @@
+﻿<h3>Seccion 9 - Hijo</h3>
+
+<p>@ParametroCascada</p>
+<p>@ParametroCascada2</p>
+
+<Seccion9Hijo></Seccion9Hijo>
+<p>Fin hijo</p>
+
+@code {
+    [CascadingParameter(Name = "Texto1")] public string ParametroCascada { get; set; }
+    [CascadingParameter(Name = "Texto2")] public string ParametroCascada2 { get; set; }
+
+}

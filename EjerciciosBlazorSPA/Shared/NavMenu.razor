@@ -6,7 +6,7 @@
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
+    <ul class="nav flex-column" style="height:100%">
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Inicio
@@ -24,11 +24,6 @@
             </NavLink>
         </li>
         *@
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="listado">
-                <span class="oi oi-list" aria-hidden="true"></span> Tarea 1
-            </NavLink>
-        </li>
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="seccion1">
                 <span class="oi oi-bookmark" aria-hidden="true"></span> Seccion 1
@@ -70,13 +65,18 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="snake">
-                <span class="oi oi-script" aria-hidden="true"></span> Juego Snake
+            <NavLink class="nav-link" href="seccion9">
+                <span class="oi oi-bookmark" aria-hidden="true"></span> Seccion 9
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="pruebas">
-                <span class="oi oi-bug" aria-hidden="true"></span> Pruebas
+            <NavLink class="nav-link" href="listado">
+                <span class="oi oi-list" aria-hidden="true"></span> Listado
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="snake">
+                <span class="oi oi-script" aria-hidden="true"></span> Juego Snake
             </NavLink>
         </li>
     </ul>

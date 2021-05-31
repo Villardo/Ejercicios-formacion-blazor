@@ -30,7 +30,7 @@ namespace EjerciciosBlazorSPA
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddSingleton<IVehiculo,Seccion8Moto>();
+            services.AddSingleton<IVehiculo,Seccion8Coche>();
             services.AddSingleton<Seccion8Coche>();
 
 
