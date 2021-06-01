@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Seccion10\" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
+    <PackageReference Include="Syncfusion.Blazor.Maps" Version="19.1.0.66" />
   </ItemGroup>
 
 </Project>
