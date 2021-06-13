@@ -1,33 +1,31 @@
 ﻿@page "/seccion9"
-@inject IJSRuntime JavaScript
+@inject IJSRuntime JavaScript 
 
-<h3>Seccion 9 - Trabajo con JS</h3>
+<h3>Seccion 9 - Trabajo con JavaScript</h3>
+
 <p>Nombre: @nombre</p>
-<button class="btn-danger" @onclick="SolicitarNombre">Escribir nombre</button>
 
-<h3 class="mt-5">Seccion 9 - Parámetros en cascada</h3>
+<button  @onclick="SolicitarNombre">Escribir nombre</button>
 
+<h3>Parámetros en cascada</h3>
 <CascadingValue Value="@ValorParametro" Name="Texto1">
     <CascadingValue Value="@ValorParametro2" Name="Texto2">
         <Seccion9Hijo></Seccion9Hijo>
-    </CascadingValue>
+    </CascadingValue>    
 </CascadingValue>
 
-
-
-<Seccion9Parametros Nombre="Hadrian" Apellidos="Villar Cuadrado" Edad="24" class="btn-danger">
+<Seccion9Parametros Nombre="asdasd">
 
 </Seccion9Parametros>
 
-@*<CascadingValue Value="@ValorParametro2">
-    <Seccion9Hijo></Seccion9Hijo>
-</CascadingValue>*@ 
 
 
 
 @code {
-    private string nombre, ValorParametro = "Texto traspasado en cascada", ValorParametro2 = "Texto 2";
-    public int ValorEntero { get; set; }
+    private string nombre="";
+    private string ValorParametro = "Texto traspasado en cascada"; 
+    private string ValorParametro2 = "Texto 2";
+
 
     private async Task SolicitarNombre()
     {

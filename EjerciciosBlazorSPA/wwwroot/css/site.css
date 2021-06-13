@@ -49,12 +49,6 @@ a, .btn-link {
         top: 0.5rem;
     }
 
-
- /*o uno u otro*/
 .sidebar {
-    height: 100% !important;
-}
-
-.page {
-    height: 100vh;
+    overflow-y: auto;
 }

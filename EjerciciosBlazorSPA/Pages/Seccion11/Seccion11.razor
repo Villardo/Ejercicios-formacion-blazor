@@ -1,17 +1,30 @@
 ﻿@page "/seccion11"
 
-<h3>Seccion 11 - Acceso a datos con Entity Framework</h3>
+<div class="container-fluid">
+    <div class="text-center">
+        <h3>Seccion 11 - Acceso a datos con Entity Framework</h3>
+        @foreach (var miPersona in PersonasFiltradas)
+        {
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <img src='https://eu.ui-avatars.com/api/?name=@miPersona.Nombre+@miPersona.Apellido&background=random&rounded=true'>
+                    <p class="card-text">Nombre: @miPersona.Nombre</p>
+                    <p class="card-text">Apellido: @miPersona.Apellido</p>
+                    <p class="card-text">Edad: @miPersona.Edad</p>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-6">
+                <button class="btn-success btn-block" @onclick="DameMenoresQue3">Personas con menos de 3 años</button>
+            </div>
+            <div class="col-6">
+                <button class="btn-success btn-block" @onclick="DamePersonas">Personas con varias</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-@foreach (var miPersona in PersonasFiltradas)
-{
-    <p>Nombre: @miPersona.Nombre</p>
-    <p>Apellido: @miPersona.Apellido</p>
-    <p>Edad: @miPersona.Edad</p>
-    <p>-----------------</p>
-}
-
-<button class="btn-success" @onclick="DameMenoresQue3">Personas con menos de 3 años</button>
-<button class="btn-success" @onclick="DamePersonas">Personas con varias</button>
 
 @code {
 

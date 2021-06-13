@@ -8,7 +8,7 @@ namespace EjerciciosBlazorSPA.Pages.Seccion11
     public partial class Seccion11
     {
         public List<Persona> Personas { get; set; }
-        public List<Persona> PersonasFiltradas { get; set; }
+        public List<Persona> PersonasFiltradas { get; set; } = new();
 
         
         protected override void OnInitialized()

@@ -1,0 +1,275 @@
+﻿@page "/Todolist"
+
+@inject MiDbContext Contexto
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4">            
+            <div class="showLists text-left">
+                <div class="row">
+                    <h4><span class="oi oi-list mr-3 mb-5"></span>Listas</h4>
+                </div>
+                <div class="row">
+                    @foreach (var item in MisListas)
+                    {
+                        <div class="input-group mb-1">
+                            <input class="ml-2 form-control" id="lista@(item.Id)" @bind="@(item.Nombre)" @onclick="@(()=>R_Tareas(item.Id))" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" @onclick="@(()=>U_Lista(item))">Editar</button>
+                                <button class="btn btn-outline-secondary" @onclick="@(()=>D_Lista(item))">Borrar</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <hr />
+            <div class="addNewList">
+                <div class="row">
+                    <EditForm Model="MiLista"
+                              OnValidSubmit="C_Lista">
+                        <p>Añadir lista: <InputText @bind-Value="@MiLista.Nombre"></InputText></p>
+                        <button type="submit">Guardar</button>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="showTask">
+                <div class="row">
+                    <h4><span class="oi oi-check mr-3 mb-5"></span>Tareas</h4>
+                </div>
+
+                @if (MisTareas != null)
+                {
+                    @foreach (var item in MisTareas)
+                    {
+                        @if (item.EstaChecked)
+                        {
+                            <div class="input-group ml-2 mb-1">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input @bind="@(item.EstaChecked)" id="tarea@(item.Id)" type="checkbox" @onclick="@(()=>U_Tarea(item.Id))">
+                                    </div>
+                                    <input @bind-value="@(item.Nombre)" @onclick="@(()=>R_Pasos(item.Id))" id="tarea@(item.Id)" style="text-decoration:line-through" />
+                                </div>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" @onclick="@(()=>D_Tarea(item))">Borrar</button>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="input-group ml-2 mb-1">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input @bind="@(item.EstaChecked)" id="tarea@(item.Id)" type="checkbox" @onclick="@(()=>U_Tarea(item.Id))">
+                                    </div>
+                                    <input @bind-value="@(item.Nombre)" @onclick="@(()=>R_Pasos(item.Id))" id="tarea@(item.Id)" />
+                                </div>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" @onclick="@(()=>D_Tarea(item))">Borrar</button>
+                                </div>
+                            </div>
+                        }
+
+                    }
+                }
+            </div>
+            <hr />
+            <div class="addNewTask">
+                <EditForm Model="MiTarea"
+                          OnValidSubmit="C_Tarea">
+                    <p>Añadir Tarea: <InputText @bind-Value="@MiTarea.Nombre"></InputText></p>
+                    <button type="submit">Guardar</button>
+                </EditForm>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="showSteps">
+                <div class="row">
+                    <h4><span class="oi oi-media-step-forward mr-3 mb-5"></span>Pasos</h4>
+                </div>
+
+                @if (MisPasos != null)
+                {
+                    @foreach (var item in MisPasos)
+                    {
+                        @if (item.EstaChecked)
+                        {
+                            <div class="input-group ml-2 mb-1">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input @bind="@(item.EstaChecked)" id="paso@(item.Id)" type="checkbox" @onclick="@(()=>U_Paso(item.Id))">
+                                    </div>
+                                    <input @bind-value="@(item.Nombre)" id="paso@(item.Id)" style="text-decoration:line-through" />
+                                </div>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" @onclick="@(()=>D_Paso(item))">Borrar</button>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="input-group ml-2 mb-1">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input @bind="@(item.EstaChecked)" id="paso@(item.Id)" type="checkbox" @onclick="@(()=>U_Paso(item.Id))">
+                                    </div>
+                                    <input @bind-value="@(item.Nombre)" id="paso@(item.Id)" />
+                                </div>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" @onclick="@(()=>D_Paso(item))">Borrar</button>
+                                </div>
+                            </div>
+                        }
+
+                    }
+                }
+
+            </div>
+            <hr />
+            <div class="addNewStep">
+                <EditForm Model="MiPaso"
+                          OnValidSubmit="C_Paso">
+                    <p>Añadir Paso: <InputText @bind-Value="@MiPaso.Nombre"></InputText></p>
+                    <button type="submit">Guardar</button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<p style="color:red;font-size:5rem">@ListaIdAct</p>
+    <p style="color:red;font-size:5rem">@TareaIdAct</p>*@
+
+@code {
+    public Lista MiLista { get; set; }
+    public List<Lista> MisListas { get; set; }
+
+    public Tarea MiTarea { get; set; }
+    public List<Tarea> MisTareas { get; set; }
+
+    public Paso MiPaso { get; set; }
+    public List<Paso> MisPasos { get; set; }
+
+    public int ListaIdAct, TareaIdAct;
+
+    //Listas
+    private void C_Lista()
+    {
+        Contexto.Listas.Add(MiLista);
+        Contexto.SaveChanges();
+        MiLista = new();
+        R_Listas();
+    }
+
+    private void R_Listas()
+    {
+        MisListas = Contexto.Listas.ToList();
+        MisPasos = null;
+    }
+
+    private void U_Lista(Lista miLista)
+    {
+        MiLista = miLista.Clone();
+    }
+
+    private void D_Lista(Lista miLista)
+    {
+        Contexto.Listas.Remove(miLista);
+        Contexto.Tareas.RemoveRange(Contexto.Tareas.Where(tarea => tarea.IdLista == miLista.Id));
+        List<int> IdTareas = Contexto.Tareas.Where(tarea => tarea.IdLista == miLista.Id).Select(tarea => tarea.Id).ToList();
+        foreach (var item in IdTareas)
+        {
+            Contexto.Pasos.RemoveRange(Contexto.Pasos.Where(paso => paso.IdTarea == item));
+        }
+        Contexto.SaveChanges();
+        R_Listas();
+        MisTareas = null;
+    }
+
+    //Tareas
+    private void C_Tarea()
+    {
+        if (Contexto.Listas.Where(lista => lista.Id == ListaIdAct).Count() > 0)
+        {
+            MiTarea.IdLista = ListaIdAct;
+            Contexto.Tareas.Add(MiTarea);
+            Contexto.SaveChanges();
+            MiTarea = new();
+            R_Tareas(ListaIdAct);
+        }
+    }
+
+    private void R_Tareas(int listaId)
+    {
+        ListaIdAct = listaId;
+        MisTareas = Contexto.Tareas.Where(tarea => tarea.IdLista == ListaIdAct).ToList();
+        MisPasos = null;
+    }
+
+    private void U_Tarea(int idTarea)
+    {
+        Tarea estaTarea = Contexto.Tareas.Single(tarea => tarea.Id == idTarea);
+        estaTarea.EstaChecked = estaTarea.EstaChecked == true ? false : true;
+        MiTarea = estaTarea.Clone();
+        Contexto.SaveChanges();
+    }
+
+    private void D_Tarea(Tarea miTarea)
+    {
+        Contexto.Tareas.Remove(miTarea);
+        Contexto.Pasos.RemoveRange(Contexto.Pasos.Where(paso => paso.IdTarea == miTarea.Id));
+        Contexto.SaveChanges();
+        R_Tareas(ListaIdAct);
+        MisPasos = null;
+    }
+
+    //Pasos
+    private void C_Paso()
+    {
+        if (Contexto.Tareas.Where(tarea => tarea.Id == TareaIdAct).Count() > 0)
+        {
+            MiPaso.IdTarea = TareaIdAct;
+            Contexto.Pasos.Add(MiPaso);
+            Contexto.SaveChanges();
+            MiPaso = new();
+            R_Pasos(TareaIdAct);
+        }
+
+
+    }
+
+    private void R_Pasos(int tareaId)
+    {
+        TareaIdAct = tareaId;
+        MisPasos = Contexto.Pasos.Where(paso => paso.IdTarea == TareaIdAct).ToList();
+    }
+
+    private void U_Paso(int idPaso)
+    {
+        Paso estePaso = Contexto.Pasos.Single(paso => paso.Id == idPaso);
+        estePaso.EstaChecked = estePaso.EstaChecked == true ? false : true;
+        MiPaso = estePaso.Clone();
+        Contexto.SaveChanges();
+    }
+
+    private void D_Paso(Paso miPaso)
+    {
+        Contexto.Pasos.Remove(miPaso);
+        Contexto.SaveChanges();
+        R_Pasos(TareaIdAct);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        MiLista = new();
+        MisListas = new();
+        MiTarea = new();
+        MisTareas = new();
+        MiPaso = new();
+        MisPasos = new();
+        R_Listas();
+    }
+}

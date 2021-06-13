@@ -60,7 +60,7 @@
 @code {
     //todo: cambiar los inputs por labels y adjuntarle un id a cada item de la lista
 
-    private List<Tarea> tareas = new List<Tarea>();
+    private List<Tarea1> tareas = new List<Tarea1>();
     private string nuevaTarea;
     private int contador = 0;
 
@@ -69,7 +69,7 @@
         if (!string.IsNullOrWhiteSpace(nuevaTarea))
         {
             contador++;
-            tareas.Add(new Tarea
+            tareas.Add(new Tarea1
             {
                 Nombre = nuevaTarea,
                 Id = contador

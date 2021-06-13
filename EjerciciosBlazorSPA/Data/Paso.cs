@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace EjerciciosBlazorSPA.Data
 {
-    public class Tarea
+    public class Paso
     {
         public int Id { get; set; }
         [Required]
         public string Nombre { get; set; }
         [Required]
         public bool EstaChecked { get; set; }
-        public int IdLista { get; set; }
-        //public string Comentario { get; set; }
-
-        public Tarea Clone()
+        [Required]
+        public int IdTarea { get; set; }
+        public Paso Clone()
         {
-            return new Tarea
+            return new Paso
             {
                 Id = this.Id,
                 Nombre = this.Nombre,

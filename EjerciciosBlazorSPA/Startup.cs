@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EjerciciosBlazorSPA.Pages.Seccion8;
+using Syncfusion.Blazor;
+using Microsoft.EntityFrameworkCore;
 
 namespace EjerciciosBlazorSPA
 {
@@ -32,6 +34,9 @@ namespace EjerciciosBlazorSPA
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<IVehiculo,Seccion8Coche>();
             services.AddSingleton<Seccion8Coche>();
+            services.AddSyncfusionBlazor();
+            services.AddDbContext<MiDbContext>(Options => Options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
 
 
         }
